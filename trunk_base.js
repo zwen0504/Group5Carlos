@@ -18,11 +18,11 @@ function drawTrunk() {
       strokeWeight(1);
   
       // Left half dark green
-      fill(0, 100, 0);
+      fill('#2AA25E');
       arc(x, y, r, r, PI / 2, PI * 3 / 2, PIE);
   
       // Right half light green
-      fill(144, 238, 144);
+      fill('#A8DC80');
       arc(x, y, r, r, PI * 3 / 2, PI / 2, PIE);
     }
   }
@@ -46,10 +46,10 @@ function drawTrunk() {
       let x = xStart + i * cellW;
   
       // Set the fill color of each rectangle
-      if (i === 0 || i === 8) fill(144, 238, 144); // The two outermost rectangles
-      else if (i === 1 || i === 7) fill(0, 100, 0); // The second two outer rectangles
-      else if (i % 2 === 0) fill(255, 204, 0);      // The remaining even numbers are yellow
-      else fill(255, 140, 0);                       // The remaining odd numbers are orange
+      if (i === 0 || i === 8) fill('#A8DC80'); // The two outermost rectangles
+      else if (i === 1 || i === 7) fill('#2AA25E'); // The second two outer rectangles
+      else if (i % 2 === 0) fill('#A8DC80');      // The remaining even numbers are yellow (greenish tone now)
+      else fill('#2AA25E');                       // The remaining odd numbers are orange (now dark green)
   
       stroke(0); // Add black outline to base rectangles
       strokeWeight(1);
@@ -63,15 +63,14 @@ function drawTrunk() {
   
       // The 5 rectangles in the middle draw red and green semicircles (upper and lower)
       if (i >= 2 && i <= 6) {
-        fill(0, 150, 0); // Upper half green
+        fill('#2AA25E'); // Upper half green
         arc(cx, cy, cellW, cellH, PI, 0, PIE);
-        fill(255, 0, 0); // Lower half red
+        fill('#C3695D'); // Lower half red
         arc(cx, cy, cellW, cellH, 0, PI, PIE);
       } else {
         // The outer upper green circle
-        fill(0, 150, 0);
+        fill('#2AA25E');
         arc(cx, cy, cellW, cellH, PI, 0, PIE);
       }
     }
   }
-  
