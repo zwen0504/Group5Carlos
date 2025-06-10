@@ -2,12 +2,16 @@ let img;
 let palette = [];
 let borderColor;
 let columnWidths = [];
+let balls = []
 
 function preload() {
   img = loadImage('Assets/Anwar Jalal Shemza Apple Tree.jpeg'); 
 }
 
 function setup() {
+  let trunk = new Circles(img.width/2, img.height - img.height/5.5, 50)
+  trunk.generateTrunk()
+
   createCanvas(img.width, img.height);
   extractBackgroundPalette();
 
@@ -18,6 +22,13 @@ function setup() {
   drawMosaicBackground();
   addTexture();
   addScratches();
+  drawBase()
+}
+
+function draw() {
+  for (let ball of balls) {
+    ball.display();
+    }
 }
 
 //Randomly sample the entire image

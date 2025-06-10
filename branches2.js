@@ -1,3 +1,22 @@
+//Empty array of balls 
+let balls = []
+
+//Setup function to generate start position of trunk
+function setup() {
+  createCanvas(1200, 1200)
+  let trunk = new Circles(width/2, height - height/3, 50)
+  trunk.generateTrunk()
+}
+
+//Draw function for display ball function
+function draw() {
+  background(222)
+
+    for (let ball of balls) {
+    ball.display();
+    }
+}
+
 //Circles class storing information of each ball
 class Circles {
 
@@ -14,10 +33,9 @@ class Circles {
     this.StrokeWeight = 0
   }
   
-
   //generate trunk function, logic
   generateTrunk() {
-    const segments = 3
+    const segments = 5
     let y = this.ballYPos 
     let x = this.ballXPos
     let prevD = this.ballDiameter
