@@ -1,14 +1,14 @@
 //Circles class storing information of each ball
 class Circles {
 
-  constructor(starterXPos, starterYPos, starterDiameter){
+  constructor(starterXPos, starterYPos, starterDiameter, colorTop, colorBottom){
     this.ballXPos = starterXPos
     this.ballYPos = starterYPos
     this.ballDiameter = starterDiameter
-    
+  
     //stored random colors with min/max of browns for trunk
-    this.colorTop = color(random(60, 100), random(40, 70), random(20, 50));
-    this.colorBottom = color(random(100, 150), random(60, 100), random(30, 80));
+    this.colorTop = colorTop ?? color(random(80, 100), random(50, 70), random(40, 50));
+    this.colorBottom = colorBottom ?? color(random(120, 150), random(80, 100), random(50, 80));
 
     this.StrokeColor = color(0)
     this.StrokeWeight = 0
@@ -27,7 +27,7 @@ class Circles {
 
     //logic to keep balls connected
     for (let i=0; i<segments; i++){
-      let newD = Math.round(random(20, 100))
+      let newD = Math.round(random(10, 80))
       //change y pos of next ball by radius of previous ball + new ball
       y -= (prevD/2 + newD/2) 
       balls.push(new Circles(x, y, newD))
@@ -36,8 +36,53 @@ class Circles {
     }
   }
 
+  generateBranches() {
+    const start = balls[balls.length - 1]; // Top of the trunk
+    const numBranches = 4;
+    const angleOffsets = [-PI/6, -PI/3, -TWO_PI/3, -(5*PI)/6]; // Direction spread
 
-  display() {
+    const seasonColors = [
+      [color(120, 255, 120), color(80, 200, 80)], // Spring (light green)
+      [color(255, 230, 100), color(255, 180, 60)],  // Summer (yellow/gold)
+      [color(255, 100, 0), color(150, 30, 0)],   // Autumn (orange)
+      [color(120, 180, 255), color(60, 120, 200)]  // Winter (icy blue)
+    ];
+
+    for (let i = 0; i < numBranches; i++) {
+      this.growBranch(start.ballXPos, start.ballYPos, 6, angleOffsets[i], seasonColors[i]);
+    }
+  }
+
+  growBranch(x, y, segments, angle, colorPair) {
+
+    let prevD = random(10, 60);
+
+    let baseTop = color(random(80, 100), random(50, 70), random(40, 50))
+    let baseBottom = color(random(120, 150), random(80, 100), random(50, 80))
+
+    for (let i = 0; i < segments; i++) {
+      let newD = random(10, 60);
+
+      let lerpAmt = sqrt(i / segments) //stronger gradient transition to colours
+       // Calculate the color for this segment based on progress
+      let t = i / (segments - 1); // progress from 0 to 1
+      let interpolatedTop = lerpColor(baseTop, colorPair[0], lerpAmt);    // start from white or base
+      let interpolatedBottom = lerpColor(baseBottom, colorPair[1], lerpAmt); // makes gradient more "intense" as it progresses
+
+      // Move in direction of angle
+      x += cos(angle) * (prevD / 2 + newD / 2);
+      y += sin(angle) * (prevD / 2 + newD / 2);
+
+      let jitter = random(-PI / 10, PI / 10);
+      angle += jitter; // create a wiggly path
+
+      balls.push(new Circles(x, y, newD, interpolatedTop, interpolatedBottom));
+      prevD = newD;
+    }
+  }
+
+
+  display(){  
 
     push()
 
@@ -56,5 +101,4 @@ class Circles {
     pop()
     
   }
-
 }

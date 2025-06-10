@@ -4,6 +4,7 @@ let borderColor;
 let columnWidths = [];
 let balls = []
 
+
 function preload() {
   img = loadImage('Assets/Anwar Jalal Shemza Apple Tree.jpeg'); 
 }
@@ -11,6 +12,7 @@ function preload() {
 function setup() {
   let trunk = new Circles(img.width/2, img.height - img.height/5.5, 50)
   trunk.generateTrunk()
+  trunk.generateBranches()
 
   createCanvas(img.width, img.height);
   extractBackgroundPalette();
@@ -29,6 +31,7 @@ function draw() {
   for (let ball of balls) {
     ball.display();
     }
+  trunk.growBranch()
 }
 
 //Randomly sample the entire image
