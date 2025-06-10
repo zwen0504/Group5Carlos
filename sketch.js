@@ -1,3 +1,4 @@
+
 let img;
 let numSegments = 20;
 let segments = [];
@@ -34,9 +35,11 @@ function draw() {
     //lets draw the image to the canvas
     image(img, 0, 0);
   }
+
     //lets draw the base and trunk to the canvas
   drawBase();
   drawTrunk();
+
 }
 
 class ImageSegment {
